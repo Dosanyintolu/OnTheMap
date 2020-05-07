@@ -1,0 +1,15 @@
+//
+//  UdacityLoginRequest.swift
+//  OnTheMap
+//
+//  Created by Doyinsola Osanyintolu on 5/7/20.
+//  Copyright © 2020 DoyinOsanyintolu. All rights reserved.
+//
+
+import Foundation
+
+
+struct UdacityLogin: Codable {
+    
+    let udacity: [LoginRequest]
+}

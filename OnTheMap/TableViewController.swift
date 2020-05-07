@@ -1,5 +1,5 @@
 //
-//  SecondViewController.swift
+//  TableViewController.swift
 //  OnTheMap
 //
 //  Created by Doyinsola Osanyintolu on 5/5/20.
@@ -9,7 +9,11 @@
 import UIKit
 
 class TableViewController: UIViewController {
-
+    
+    @IBOutlet weak var refreshButton: UIBarButtonItem!
+    @IBOutlet weak var addPinButton: UIBarButtonItem!
+    @IBOutlet weak var logoutButton: UIBarButtonItem!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.

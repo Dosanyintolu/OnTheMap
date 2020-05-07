@@ -11,4 +11,8 @@ import Foundation
 struct Results: Codable {
     
     let results: [StudentLocation]
+    
+    enum Codingkeys: String, CodingKey {
+        case results
+    }
 }
