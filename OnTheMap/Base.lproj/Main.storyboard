@@ -33,18 +33,28 @@
                     </view>
                     <navigationItem key="navigationItem" title="On The Map" id="vrS-Bq-o6d">
                         <leftBarButtonItems>
-                            <barButtonItem systemItem="stop" id="xnK-ls-5m1"/>
+                            <barButtonItem systemItem="stop" id="xnK-ls-5m1">
+                                <connections>
+                                    <action selector="logoutButton:" destination="9pv-A4-QxB" id="VWA-1Q-HTp"/>
+                                </connections>
+                            </barButtonItem>
                             <barButtonItem systemItem="add" id="YIO-ff-zKd">
                                 <connections>
-                                    <segue destination="ixl-8H-UnC" kind="presentation" modalPresentationStyle="formSheet" id="lMv-GI-bbA"/>
+                                    <action selector="addLocationButton:" destination="9pv-A4-QxB" id="dVJ-GZ-W9y"/>
+                                    <segue destination="ixl-8H-UnC" kind="presentation" identifier="addSegue" modalPresentationStyle="formSheet" id="lMv-GI-bbA"/>
                                 </connections>
                             </barButtonItem>
                         </leftBarButtonItems>
-                        <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="8DL-72-TOQ"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="8DL-72-TOQ">
+                            <connections>
+                                <action selector="mapRefreshButton:" destination="9pv-A4-QxB" id="Ruy-9x-WDS"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="addPinButton" destination="YIO-ff-zKd" id="HeP-rl-o9p"/>
                         <outlet property="logoutButton" destination="xnK-ls-5m1" id="ole-qZ-qsc"/>
+                        <outlet property="mapView" destination="yzP-5r-EQK" id="eTx-Zb-y94"/>
                         <outlet property="refreshButton" destination="8DL-72-TOQ" id="Z3j-JT-lwy"/>
                     </connections>
                 </viewController>
@@ -135,8 +145,8 @@
                     <connections>
                         <outlet property="cityTextField" destination="aqs-5N-7f8" id="Iqt-1I-C38"/>
                         <outlet property="dropPinButton" destination="lCG-N8-vVt" id="eYa-52-QEM"/>
-                        <outlet property="imageView" destination="uYR-BO-S6t" id="FeR-RB-tZ2"/>
                         <outlet property="linkTextField" destination="TiE-6b-pUO" id="7LX-fw-9GA"/>
+                        <outlet property="mapView" destination="uYR-BO-S6t" id="Mej-gl-P7K"/>
                         <outlet property="questionLabel" destination="eOR-oa-1MC" id="6YN-KY-hJQ"/>
                         <outlet property="stateTextField" destination="HtA-I3-1Mf" id="oIZ-UN-mQ1"/>
                     </connections>
@@ -157,11 +167,11 @@
                                 <rect key="frame" x="0.0" y="88" width="414" height="725"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="LocationCell" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="LocationCell" id="eEv-jy-Mqj">
-                                        <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="LocationCell" rowHeight="73" id="eEv-jy-Mqj">
+                                        <rect key="frame" x="0.0" y="28" width="414" height="73"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="eEv-jy-Mqj" id="jqE-WW-nLN">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="73"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -192,11 +202,12 @@
                         <outlet property="addPinButton" destination="8eW-84-EOz" id="oV9-5F-Hg5"/>
                         <outlet property="logoutButton" destination="D15-fa-nTW" id="dB3-3x-ON2"/>
                         <outlet property="refreshButton" destination="9u1-ej-Sfp" id="Tqf-Vv-kij"/>
+                        <outlet property="tableView" destination="xej-zZ-iAv" id="8fX-Uq-OgG"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Nw-L8-lE0" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1659" y="358"/>
+            <point key="canvasLocation" x="1657.9710144927537" y="357.58928571428572"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="yl2-sM-qoP">
@@ -365,7 +376,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="lMv-GI-bbA"/>
+        <segue reference="G2O-F1-n2v"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="925758500s" width="2402" height="2586"/>

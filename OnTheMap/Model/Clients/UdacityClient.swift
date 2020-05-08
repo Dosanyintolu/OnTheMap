@@ -54,11 +54,13 @@ class UdacityClient {
            
        }
     
-    class func logout(completioHandler: @escaping () -> Void) {
+    class func logout(completioHandler: @escaping (Bool, Error?) -> Void) {
         taskDELETErequest(url: Endpoint.getSessionIdURL.url, response: Session.self) { (_, error) in
             if error != nil {
-                print(error!.localizedDescription)
-                Auth.sessionId = ""
+                print(error?.localizedDescription ?? "Something went wrong")
+            } else {
+                 Auth.sessionId = ""
+                 completioHandler(true, nil)
             }
         }
     }

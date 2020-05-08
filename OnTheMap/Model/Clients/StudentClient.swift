@@ -42,15 +42,14 @@ class StudentClient {
     }
     
     
-    class func getStudentLocation(completionHandler: @escaping([StudentLocation], Error?) -> Void) -> URLSessionTask{
-      let task = taskGETRequest(url: Endpoint.getLocationURL.url, response: Results.self) { (response, error) in
+    class func getStudentLocation(completionHandler: @escaping([StudentLocation], Error?) -> Void) {
+      taskGETRequest(url: Endpoint.getLocationURL.url, response: Results.self) { (response, error) in
             if let response = response {
                 completionHandler(response.results, nil)
             } else {
                 completionHandler([], error)
             }
         }
-        return task
     }
     
     class func postStudentLocation(completionHandler: @escaping (Bool, Error?) -> Void){
@@ -77,7 +76,7 @@ class StudentClient {
     }
    
     
-   @discardableResult class func taskGETRequest<Response: Decodable>(url: URL, response: Response.Type, completionHandler: @escaping (Response?, Error?) -> Void) -> URLSessionTask {
+class func taskGETRequest<Response: Decodable>(url: URL, response: Response.Type, completionHandler: @escaping (Response?, Error?) -> Void) {
         
     let task =  URLSession.shared.dataTask(with: url) { (data, _, error) in
         guard let data = data else {
@@ -96,7 +95,7 @@ class StudentClient {
             }
         }
     }
-    return task
+    task.resume()
     }
 
 
