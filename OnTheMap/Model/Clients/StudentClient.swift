@@ -1,5 +1,5 @@
 //
-//  OTMClient.swift
+//  StudentClient.swift
 //  OnTheMap
 //
 //  Created by Doyinsola Osanyintolu on 5/5/20.
@@ -9,10 +9,14 @@
 import Foundation
 
 
-class OTMClient {
+class StudentClient {
+    
+   static var postLocation: StudentLocation!
+    
     
     struct Auth{
-        static let objectId = ""
+        static var objectId = ""
+        static var sessionId = ""
         
     }
     enum Endpoint {
@@ -49,6 +53,28 @@ class OTMClient {
         return task
     }
     
+    class func postStudentLocation(completionHandler: @escaping (Bool, Error?) -> Void){
+        taskPOSTRequest(url: Endpoint.postLocationURL.url, body: LocationRequest(uniqueKey: postLocation.uniqueKey , firstName: postLocation.firstName, lastName: postLocation.lastName, mapString: postLocation.mapString, mediaURL: postLocation.mediaURL, latitude: postLocation.latitude, longitude: postLocation.longitude), response: LocationResponse.self) { (response, error) in
+            if let response = response {
+                Auth.objectId = response.objectId
+                completionHandler(true, nil)
+            }else {
+                completionHandler(false, error)
+            }
+        }
+    }
+    
+    class func overwriteStudentLocation(completionHandler: @escaping (Bool, Error?) -> Void) {
+        taskPUTRequest(url: Endpoint.putLocationURL.url, body: LocationRequest(uniqueKey: postLocation.uniqueKey , firstName: postLocation.firstName, lastName: postLocation.lastName, mapString: postLocation.mapString, mediaURL: postLocation.mediaURL, latitude: postLocation.latitude, longitude: postLocation.longitude), response: PutResponse.self) { (response, error) in
+            
+            if let response = response {
+                print(response)
+                completionHandler(true, nil)
+            } else {
+                completionHandler(false, error)
+            }
+        }
+    }
    
     
    @discardableResult class func taskGETRequest<Response: Decodable>(url: URL, response: Response.Type, completionHandler: @escaping (Response?, Error?) -> Void) -> URLSessionTask {
@@ -94,7 +120,7 @@ class func taskPOSTRequest<Request: Encodable, Response: Decodable>(url: URL, bo
         let decoder = JSONDecoder()
         
         do {
-            let object = try decoder.decode(Response.self, from: data)
+            let object = try decoder.decode(response.self, from: data)
             DispatchQueue.main.async {
                 completionHandler(object, nil)
                 

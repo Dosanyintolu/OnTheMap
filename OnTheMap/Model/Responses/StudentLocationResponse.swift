@@ -1,5 +1,5 @@
 //
-//  LocationResponse.swift
+//  StudentLocationResponse.swift
 //  OnTheMap
 //
 //  Created by Doyinsola Osanyintolu on 5/6/20.

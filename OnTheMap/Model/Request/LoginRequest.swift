@@ -1,5 +1,5 @@
 //
-//  UdacityLoginRequest.swift
+//  LoginRequest.swift
 //  OnTheMap
 //
 //  Created by Doyinsola Osanyintolu on 5/7/20.
@@ -8,8 +8,7 @@
 
 import Foundation
 
-
-struct UdacityLogin: Codable {
+struct Login: Codable {
     
-    let udacity: [LoginRequest]
+    let udacity: UdacityLoginRequest
 }

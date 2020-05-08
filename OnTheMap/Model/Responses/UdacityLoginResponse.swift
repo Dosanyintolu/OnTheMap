@@ -10,6 +10,6 @@ import Foundation
 
 
 struct UdacityLoginResponse: Codable {
-    let account: [Account]
-    let session: [Session]
+    let account: Account
+    let session: Session
 }

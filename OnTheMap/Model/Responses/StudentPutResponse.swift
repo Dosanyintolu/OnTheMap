@@ -1,5 +1,5 @@
 //
-//  LoginRequest.swift
+//  StudentPutResponse.swift
 //  OnTheMap
 //
 //  Created by Doyinsola Osanyintolu on 5/7/20.
@@ -8,8 +8,9 @@
 
 import Foundation
 
-struct LoginRequest: Codable {
+
+
+struct PutResponse: Codable {
     
-    let username: String
-    let password: String
+    let updatedAt: String
 }
