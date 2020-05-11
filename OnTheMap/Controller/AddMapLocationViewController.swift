@@ -41,7 +41,7 @@ class AddMapLocationViewController: UIViewController, MKMapViewDelegate, UITextF
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        if cityTextField.text != nil && stateTextField.isEditing == false {
+        if cityTextField.text != nil && stateTextField.text != nil {
             let geoCoder = CLGeocoder()
             geoCoder.geocodeAddressString("\(cityTextField.text!),\(stateTextField.text!)") { (placemark, _) in
                 if let placemark = placemark {

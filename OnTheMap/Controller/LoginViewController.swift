@@ -42,7 +42,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UINavigationCo
     }
     
     @IBAction func loginTapped(_ sender: Any) {
-        if usernameField.text != nil || passowrdField.text != nil {
+        if usernameField.text == nil || passowrdField.text == nil {
             alertView()
         } else {
         setLoggingIn(true)
