@@ -9,7 +9,7 @@
 import Foundation
 
 
-class StudentClient {
+class ParseClient {
     
    static var postLocation: StudentLocation!
     
@@ -23,16 +23,19 @@ class StudentClient {
         static let getLocation = "https://onthemap-api.udacity.com/v1/StudentLocation?limit=50"
         static let postLocation = "https://onthemap-api.udacity.com/v1/StudentLocation"
         static let putLocation = "https://onthemap-api.udacity.com/v1/StudentLocation/" + "\(Auth.objectId)"
+        static let udacity = "https://www.udacity.com"
         
         case getLocationURL
         case postLocationURL
         case putLocationURL
+        case udacityURL
     
     var urlValue: String {
         switch self {
         case .getLocationURL: return Endpoint.getLocation
         case .postLocationURL: return Endpoint.postLocation
         case .putLocationURL: return Endpoint.putLocation
+        case .udacityURL: return Endpoint.udacity
             }
         }
         
@@ -53,7 +56,7 @@ class StudentClient {
     }
     
     class func postStudentLocation(completionHandler: @escaping (Bool, Error?) -> Void){
-        taskPOSTRequest(url: Endpoint.postLocationURL.url, body: LocationRequest(uniqueKey: postLocation.uniqueKey , firstName: postLocation.firstName, lastName: postLocation.lastName, mapString: postLocation.mapString, mediaURL: postLocation.mediaURL, latitude: postLocation.latitude, longitude: postLocation.longitude), response: LocationResponse.self) { (response, error) in
+        taskPOSTRequest(url: Endpoint.postLocationURL.url, body: LocationRequest(uniqueKey: postLocation.uniqueKey , firstName: "Cristiano", lastName: "Ronaldo", mapString: postLocation.mapString, mediaURL: postLocation.mediaURL, latitude: postLocation.latitude, longitude: postLocation.longitude), response: LocationResponse.self) { (response, error) in
             if let response = response {
                 Auth.objectId = response.objectId
                 completionHandler(true, nil)
@@ -64,7 +67,7 @@ class StudentClient {
     }
     
     class func overwriteStudentLocation(completionHandler: @escaping (Bool, Error?) -> Void) {
-        taskPUTRequest(url: Endpoint.putLocationURL.url, body: LocationRequest(uniqueKey: postLocation.uniqueKey , firstName: postLocation.firstName, lastName: postLocation.lastName, mapString: postLocation.mapString, mediaURL: postLocation.mediaURL, latitude: postLocation.latitude, longitude: postLocation.longitude), response: PutResponse.self) { (response, error) in
+        taskPUTRequest(url: Endpoint.putLocationURL.url, body: LocationRequest(uniqueKey: postLocation.uniqueKey , firstName: "Cristiano", lastName: "Ronaldo", mapString: postLocation.mapString, mediaURL: postLocation.mediaURL, latitude: postLocation.latitude, longitude: postLocation.longitude), response: PutResponse.self) { (response, error) in
             
             if let response = response {
                 print(response)

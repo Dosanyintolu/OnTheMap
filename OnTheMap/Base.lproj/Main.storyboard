@@ -41,7 +41,7 @@
                             <barButtonItem systemItem="add" id="YIO-ff-zKd">
                                 <connections>
                                     <action selector="addLocationButton:" destination="9pv-A4-QxB" id="dVJ-GZ-W9y"/>
-                                    <segue destination="ixl-8H-UnC" kind="presentation" identifier="addSegue" modalPresentationStyle="formSheet" id="lMv-GI-bbA"/>
+                                    <segue destination="ixl-8H-UnC" kind="presentation" identifier="addSegue" modalPresentationStyle="fullScreen" id="lMv-GI-bbA"/>
                                 </connections>
                             </barButtonItem>
                         </leftBarButtonItems>
@@ -67,14 +67,14 @@
             <objects>
                 <viewController id="ixl-8H-UnC" customClass="AddMapLocationViewController" customModule="OnTheMap" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="FFg-xU-rRH">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="uYR-BO-S6t">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="458"/>
+                                <rect key="frame" x="0.0" y="44" width="414" height="468"/>
                             </mapView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="vtK-HS-4RJ">
-                                <rect key="frame" x="7" y="466" width="400" height="256"/>
+                                <rect key="frame" x="7" y="520" width="400" height="256"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Where are you Studying ?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eOR-oa-1MC">
                                         <rect key="frame" x="89" y="0.0" width="222" height="24"/>
@@ -167,12 +167,28 @@
                                 <rect key="frame" x="0.0" y="88" width="414" height="725"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="LocationCell" rowHeight="73" id="eEv-jy-Mqj">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="LocationCell" textLabel="wI9-jA-vAy" detailTextLabel="0V0-0S-f6B" rowHeight="73" style="IBUITableViewCellStyleSubtitle" id="eEv-jy-Mqj">
                                         <rect key="frame" x="0.0" y="28" width="414" height="73"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="eEv-jy-Mqj" id="jqE-WW-nLN">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="73"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="wI9-jA-vAy">
+                                                    <rect key="frame" x="20" y="16" width="33.5" height="20.5"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="0V0-0S-f6B">
+                                                    <rect key="frame" x="20" y="39.5" width="44" height="14.5"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </prototypes>
@@ -192,7 +208,7 @@
                             <barButtonItem systemItem="stop" id="D15-fa-nTW"/>
                             <barButtonItem systemItem="add" id="8eW-84-EOz">
                                 <connections>
-                                    <segue destination="ixl-8H-UnC" kind="presentation" modalPresentationStyle="formSheet" id="G2O-F1-n2v"/>
+                                    <segue destination="ixl-8H-UnC" kind="presentation" modalPresentationStyle="fullScreen" id="G2O-F1-n2v"/>
                                 </connections>
                             </barButtonItem>
                         </leftBarButtonItems>
@@ -261,7 +277,7 @@
                                                     <constraint firstAttribute="height" constant="50" id="rWR-7d-Yhy"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits"/>
+                                                <textInputTraits key="textInputTraits" textContentType="username"/>
                                             </textField>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="Password" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="A1d-1d-py0">
                                                 <rect key="frame" x="0.0" y="96" width="374" height="50"/>
@@ -269,7 +285,7 @@
                                                     <constraint firstAttribute="height" constant="50" id="Gef-4H-5Bz"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits"/>
+                                                <textInputTraits key="textInputTraits" returnKeyType="done" secureTextEntry="YES" textContentType="password"/>
                                             </textField>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="82x-qL-3Wb">
                                                 <rect key="frame" x="0.0" y="156" width="374" height="50"/>
@@ -282,7 +298,7 @@
                                                 </state>
                                                 <connections>
                                                     <action selector="loginTapped:" destination="IIW-dK-m5x" eventType="touchUpInside" id="2XC-de-b5F"/>
-                                                    <segue destination="49e-Tb-3d3" kind="presentation" modalPresentationStyle="fullScreen" id="y3w-65-NwR"/>
+                                                    <segue destination="49e-Tb-3d3" kind="presentation" identifier="LoginSegue" modalPresentationStyle="fullScreen" id="y3w-65-NwR"/>
                                                 </connections>
                                             </button>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="-72" translatesAutoresizingMaskIntoConstraints="NO" id="XSL-Xc-I1B">
@@ -291,13 +307,16 @@
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Don't have an account ?" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SMB-5m-HJL">
                                                         <rect key="frame" x="0.0" y="0.0" width="218" height="38"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="21"/>
-                                                        <nil key="textColor"/>
+                                                        <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m3N-pi-BL0">
                                                         <rect key="frame" x="146" y="0.0" width="228" height="38"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="21"/>
                                                         <state key="normal" title="Sign Up"/>
+                                                        <connections>
+                                                            <action selector="signUpButton:" destination="IIW-dK-m5x" eventType="touchUpInside" id="7rS-d9-QaF"/>
+                                                        </connections>
                                                     </button>
                                                 </subviews>
                                             </stackView>
@@ -376,7 +395,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="G2O-F1-n2v"/>
+        <segue reference="lMv-GI-bbA"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="925758500s" width="2402" height="2586"/>

@@ -12,4 +12,10 @@ import Foundation
 struct UdacityLoginResponse: Codable {
     let account: Account
     let session: Session
+    
+    
+    enum CodingKeys:String, CodingKey {
+        case account
+        case session
+    }
 }

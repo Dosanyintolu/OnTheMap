@@ -38,8 +38,12 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     }
     
     @IBAction func logoutButton(_ sender: Any) {
-        UdacityClient.logout(completioHandler:handleLogOut(success:error:))
-    }
+        if UdacityClient.Auth.sessionId == "" {
+            errorView()
+        } else {
+            UdacityClient.logout(completioHandler:handleLogOut(success:error:))
+        }
+}
     
     @IBAction func mapRefreshButton(_ sender: Any) {
         getStudentPins()
@@ -72,7 +76,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     }
     
     func getStudentPins() {
-        StudentClient.getStudentLocation { (studentLocation, error) in
+        ParseClient.getStudentLocation { (studentLocation, error) in
             if error != nil {
                 print(error?.localizedDescription ?? "")
             }else{
@@ -108,15 +112,25 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     
     func handleLogOut(success: Bool, error: Error?) {
         if success {
-            let alertVC = UIAlertController(title: "You are about to log out", message: "Confirm Log Out", preferredStyle: .alert)
-            alertVC.addAction(UIAlertAction(title:"Log Out", style: .destructive, handler: nil))
-            present(alertVC, animated: true, completion: nil)
+            alertView()
             if let navigationController = navigationController {
                 navigationController.popViewController(animated: true)
             }
         } else {
             print(error?.localizedDescription ?? "Log out error")
         }
+    }
+    
+    func alertView() {
+        let alertVC = UIAlertController(title: "You are about to log out", message: "Confirm Log Out", preferredStyle: .alert)
+        alertVC.addAction(UIAlertAction(title:"Log Out", style: .destructive, handler: nil))
+        present(alertVC, animated: true, completion: nil)
+    }
+    
+    func errorView() {
+        let alert = UIAlertController(title: "Error", message: "Mistake Somewhere", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        present(alert, animated: true, completion: nil)
     }
 }
 

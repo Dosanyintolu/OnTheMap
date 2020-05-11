@@ -21,6 +21,7 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         tableView.delegate = self
+        tableView.dataSource = self
         getStudentLocations()
     }
     
@@ -31,7 +32,7 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     
     func getStudentLocations() {
-        StudentClient.getStudentLocation { (studentLocation, error) in
+        ParseClient.getStudentLocation { (studentLocation, error) in
             if error != nil {
                 print(error?.localizedDescription ?? "")
             } else {
@@ -52,8 +53,12 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
         cell.textLabel?.text = "\(locations.firstName) \(locations.lastName)"
         cell.detailTextLabel?.text = "\(locations.mediaURL)"
         cell.imageView?.image = UIImage(named: "mapPin")
-        cell.contentView.frame = cell.contentView.frame.inset(by: UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10))
         return cell
        }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        UIApplication.shared.open(ParseClient.Endpoint.udacityURL.url, options: [:], completionHandler: nil)
+
+    }
 }
 
