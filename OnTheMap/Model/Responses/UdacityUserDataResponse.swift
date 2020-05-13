@@ -9,21 +9,23 @@
 import Foundation
 
 struct User: Codable {
-    let user: StudentLocation
+    let user: UserData
 }
 
 struct UserData: Codable {
     
+    let firstName: String
+    let lastName: String
     let bio: String?
     let registered: Bool
     let linkedIn: String?
     let location: String?
     let key: String
-    let timezone: String?
     let imageUrl: String?
     let nickname: String?
     let website: String?
     let occupation: String?
+    
     
     
     enum CodingKeys: String, CodingKey {
@@ -31,12 +33,13 @@ struct UserData: Codable {
         case registered = "_registered"
         case linkedIn = "linkedin_url"
         case imageUrl = "_image_url"
-        case timezone
         case key
         case location
         case nickname
         case website = "website_url"
         case occupation
+        case firstName = "first_name"
+        case lastName = "last_name"
     }
 
 }

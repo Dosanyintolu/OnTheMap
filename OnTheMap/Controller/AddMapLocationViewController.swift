@@ -8,8 +8,11 @@
 
 import UIKit
 import MapKit
+import CoreLocation
 
-class AddMapLocationViewController: UIViewController, MKMapViewDelegate, UITextFieldDelegate, UINavigationControllerDelegate {
+class AddMapLocationViewController: UIViewController, MKMapViewDelegate, UITextFieldDelegate, UINavigationControllerDelegate, CLLocationManagerDelegate{
+    
+    let locationManager = CLLocationManager()
    
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var questionLabel: UILabel!
@@ -17,7 +20,15 @@ class AddMapLocationViewController: UIViewController, MKMapViewDelegate, UITextF
     @IBOutlet weak var stateTextField: UITextField!
     @IBOutlet weak var linkTextField: UITextField!
     @IBOutlet weak var dropPinButton: UIButton!
+    @IBOutlet weak var shareButton: UIButton!
     
+    var uniqueKey = ""
+    var firstName = ""
+    var lastName = ""
+    var mediaURL = ""
+    var location = CLLocation()
+   
+  
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,8 +36,10 @@ class AddMapLocationViewController: UIViewController, MKMapViewDelegate, UITextF
         cityTextField.delegate = self
         stateTextField.delegate = self
         linkTextField.delegate = self
-        
+        shareButton.isHidden = true
         linkTextField.isHidden = true
+        locationManager.delegate = self
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -40,30 +53,71 @@ class AddMapLocationViewController: UIViewController, MKMapViewDelegate, UITextF
          unsubscribeToKeyboardNotification()
     }
     
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        if cityTextField.text != nil && stateTextField.text != nil {
-            let geoCoder = CLGeocoder()
-            geoCoder.geocodeAddressString("\(cityTextField.text!),\(stateTextField.text!)") { (placemark, _) in
-                if let placemark = placemark {
-                    let location = placemark
-                    self.linkTextField.isHidden = false
-                    print(location)
-                } else {
-                    self.alertView()
-                }
+    @IBAction func dropPin(_ sender: Any) {
+        getCoordinate(addressString: "\(cityTextField.text!), \(stateTextField.text!)") { (location, error) in
+            if error == nil {
+                let annotation = MKPointAnnotation()
+                annotation.coordinate = CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude)
+                
+                self.mapView.addAnnotation(annotation)
             }
         }
     }
     
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        return true
+    @IBAction func shareLocation(_ sender: Any) {
+       getUserData(completionHandler: handleGetUserData(success:error:))
     }
     
-    func alertView() {
-        let alertVC = UIAlertController(title: "Error", message: "Error Finding Location, try another location", preferredStyle: .alert)
-        alertVC.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-        present(alertVC, animated: true, completion: nil)
-    }
+    
+      func getCoordinate(addressString : String, completionHandler: @escaping(CLLocationCoordinate2D, NSError?) -> Void ) {
+          let geocoder = CLGeocoder()
+          geocoder.geocodeAddressString(addressString) { (placemarks, error) in
+              if error == nil {
+                  if let placemark = placemarks?[0] {
+                      let location = placemark.location!
+                      self.location = location
+                      
+                      let span = MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
+                      let cordinate = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
+                      let region = MKCoordinateRegion(center: cordinate, span: span)
+                      self.mapView.setRegion(region, animated: true)
+                      completionHandler(location.coordinate, nil)
+                      return
+                  }
+              }
+              completionHandler(kCLLocationCoordinate2DInvalid, error as NSError?)
+          }
+      }
+      
+    func getUserData(completionHandler: @escaping(Bool, Error?) -> Void) {
+          UdacityClient.getUserData { (userData, error) in
+              if let userData = userData {
+                  self.uniqueKey = userData.key
+                  self.firstName = userData.firstName
+                  self.lastName = userData.lastName
+                
+                print(self.uniqueKey, self.firstName, self.lastName)
+                  completionHandler(true, nil)
+              } else {
+                  print("error in getting user data")
+                  completionHandler(false, error)
+              }
+          }
+      }
+    
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+          if stateTextField.isEditing {
+              linkTextField.isHidden = false
+              shareButton.isHidden = false
+          }
+      }
+    
+      func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+          textField.resignFirstResponder()
+          return true
+      }
+      
     
     func subscribeToKeyboardNotification() {
             NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
@@ -83,10 +137,41 @@ class AddMapLocationViewController: UIViewController, MKMapViewDelegate, UITextF
     @objc func keyboardWillShow(_ notification: Notification) {
            view.frame.origin.y = 50 - getKeyboardHeight(notification)
        }
+    
+    func handleGetUserData(success: Bool, error: Error?) {
+        if success {
+              ParseClient.postStudentLocation(uniquekey: uniqueKey, firstName: firstName, lastName: lastName, mapString: "\(cityTextField.text!), \(stateTextField.text!)", mediaURL: "\(linkTextField.text!)", latitude: location.coordinate.latitude, longitude: location.coordinate.longitude, completionHandler: handlePostLocation(success:error:))
+        } else {
+            postLocationError()
+            print(error!.localizedDescription)
+        }
+    }
+    
+    func handlePostLocation(success: Bool, error: Error?) {
+        if success {
+            self.dismiss(animated: true, completion: nil)
+        } else {
+            print(error?.localizedDescription ?? "")
+            print("Error in posting location")
+        }
+    }
        
     func getKeyboardHeight(_ notification: Notification) -> CGFloat {
            let userInfo = notification.userInfo
            let keyboardSize = userInfo![UIResponder.keyboardFrameEndUserInfoKey] as! NSValue
            return keyboardSize.cgRectValue.height
        }
+    
+    func alertView() {
+           let alertVC = UIAlertController(title: "Error", message: "Error Finding Location, try another location", preferredStyle: .alert)
+           alertVC.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+           present(alertVC, animated: true, completion: nil)
+    }
+    
+    func postLocationError() {
+        let alertVC = UIAlertController(title: "Error", message: "Error posting location", preferredStyle: .alert)
+        alertVC.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        present(alertVC, animated: true, completion: nil)
+    }
+    
 }

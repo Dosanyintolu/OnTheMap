@@ -28,9 +28,22 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         getStudentLocations()
+        tableView.reloadData()
     }
     
+    @IBAction func logout(_ sender: Any) {
+        UdacityClient.logout(completioHandler: handleLogoutResponse(success:error:))
+    }
     
+    @IBAction func addLocation(_ sender: Any) {
+        performSegue(withIdentifier: "segueToAdd", sender: nil)
+    }
+    
+    @IBAction func reloadData(_ sender: Any) {
+        getStudentLocations()
+    }
+    
+   
     func getStudentLocations() {
         ParseClient.getStudentLocation { (studentLocation, error) in
             if error != nil {
@@ -60,5 +73,31 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
         UIApplication.shared.open(ParseClient.Endpoint.udacityURL.url, options: [:], completionHandler: nil)
 
     }
+    
+    
+    func handleLogoutResponse(success: Bool, error: Error?) {
+        if success {
+            alertView()
+        } else {
+            errorView()
+        }
+    }
+    func alertView() {
+           let alertVC = UIAlertController(title: "You are about to log out", message: "Confirm Log Out", preferredStyle: .alert)
+                  alertVC.addAction(UIAlertAction(title: "Log Out", style: .default, handler: { (_) in
+                       DispatchQueue.main.async {
+                                     self.dismiss(animated: true, completion: nil)
+                                 }
+                  }))
+                  alertVC.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+                  present(alertVC, animated: true)
+       }
+    
+    func errorView() {
+           let alert = UIAlertController(title: "Error", message: "Application Error", preferredStyle: .alert)
+           alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+           present(alert, animated: true, completion: nil)
+       }
+    
 }
 

@@ -32,18 +32,15 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         
     }
     
-    @IBAction func addLocationButton(_ sender: Any) {
+    @IBAction func addLocation(_ sender: Any) {
         
         performSegue(withIdentifier: "addSegue", sender: nil)
     }
     
-    @IBAction func logoutButton(_ sender: Any) {
-        if UdacityClient.Auth.sessionId == "" {
-            errorView()
-        } else {
-            UdacityClient.logout(completioHandler:handleLogOut(success:error:))
+    @IBAction func logout(_ sender: Any) {
+        logoutView()
         }
-}
+
     
     @IBAction func mapRefreshButton(_ sender: Any) {
         getStudentPins()
@@ -111,26 +108,34 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     }
     
     func handleLogOut(success: Bool, error: Error?) {
-        if success {
-            alertView()
-            if let navigationController = navigationController {
-                navigationController.popViewController(animated: true)
-            }
-        } else {
-            print(error?.localizedDescription ?? "Log out error")
+        if success == false{
+            logoutError()
         }
     }
     
-    func alertView() {
+    func logoutView() {
         let alertVC = UIAlertController(title: "You are about to log out", message: "Confirm Log Out", preferredStyle: .alert)
-        alertVC.addAction(UIAlertAction(title:"Log Out", style: .destructive, handler: nil))
-        present(alertVC, animated: true, completion: nil)
+        alertVC.addAction(UIAlertAction(title: "Log Out", style: .default, handler: { (_) in
+            UdacityClient.logout(completioHandler:self.handleLogOut(success:error:))
+             DispatchQueue.main.async {
+                           self.dismiss(animated: true, completion: nil)
+                       }
+        }))
+        alertVC.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        present(alertVC, animated: true)
     }
     
-    func errorView() {
-        let alert = UIAlertController(title: "Error", message: "Mistake Somewhere", preferredStyle: .alert)
+    func logoutError() {
+        let alert = UIAlertController(title: "Error", message: "Error logging out", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         present(alert, animated: true, completion: nil)
     }
+    
+    func errorView() {
+        let alert = UIAlertController(title: "Error", message: "Application Error", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        present(alert, animated: true, completion: nil)
+    }
+    
 }
 

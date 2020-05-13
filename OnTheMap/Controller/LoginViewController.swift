@@ -33,6 +33,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UINavigationCo
         usernameField.text = ""
         passowrdField.text = ""
         subscribeToKeyboardNotification()
+        enableButton(Bool: true)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -42,7 +43,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UINavigationCo
     }
     
     @IBAction func loginTapped(_ sender: Any) {
-        if usernameField.text == nil || passowrdField.text == nil {
+        if usernameField.text == nil && passowrdField.text == nil {
             alertView()
         } else {
         setLoggingIn(true)
@@ -118,6 +119,11 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UINavigationCo
         let userInfo = notification.userInfo
         let keyboardSize = userInfo![UIResponder.keyboardFrameEndUserInfoKey] as! NSValue
         return keyboardSize.cgRectValue.height
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
 }
 

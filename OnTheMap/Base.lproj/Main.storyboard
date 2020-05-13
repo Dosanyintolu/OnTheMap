@@ -35,13 +35,13 @@
                         <leftBarButtonItems>
                             <barButtonItem systemItem="stop" id="xnK-ls-5m1">
                                 <connections>
-                                    <action selector="logoutButton:" destination="9pv-A4-QxB" id="VWA-1Q-HTp"/>
+                                    <action selector="logout:" destination="9pv-A4-QxB" id="t8y-4U-Uqr"/>
                                 </connections>
                             </barButtonItem>
                             <barButtonItem systemItem="add" id="YIO-ff-zKd">
                                 <connections>
                                     <action selector="addLocationButton:" destination="9pv-A4-QxB" id="dVJ-GZ-W9y"/>
-                                    <segue destination="ixl-8H-UnC" kind="presentation" identifier="addSegue" modalPresentationStyle="fullScreen" id="lMv-GI-bbA"/>
+                                    <segue destination="ixl-8H-UnC" kind="presentation" identifier="addSegue" id="lMv-GI-bbA"/>
                                 </connections>
                             </barButtonItem>
                         </leftBarButtonItems>
@@ -65,16 +65,16 @@
         <!--Add Map Location View Controller-->
         <scene sceneID="hqM-RU-yCV">
             <objects>
-                <viewController id="ixl-8H-UnC" customClass="AddMapLocationViewController" customModule="OnTheMap" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="formSheet" id="ixl-8H-UnC" customClass="AddMapLocationViewController" customModule="OnTheMap" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="FFg-xU-rRH">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="uYR-BO-S6t">
-                                <rect key="frame" x="0.0" y="44" width="414" height="468"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="400"/>
                             </mapView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="vtK-HS-4RJ">
-                                <rect key="frame" x="7" y="520" width="400" height="256"/>
+                                <rect key="frame" x="7" y="408" width="400" height="314"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Where are you Studying ?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eOR-oa-1MC">
                                         <rect key="frame" x="89" y="0.0" width="222" height="24"/>
@@ -83,7 +83,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="u7h-6O-AbF">
-                                        <rect key="frame" x="0.0" y="32" width="400" height="224"/>
+                                        <rect key="frame" x="0.0" y="32" width="400" height="282"/>
                                         <subviews>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="City" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="aqs-5N-7f8">
                                                 <rect key="frame" x="0.0" y="0.0" width="400" height="50"/>
@@ -119,6 +119,23 @@
                                                 <state key="normal" title="Drop Pin">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="dropPin:" destination="ixl-8H-UnC" eventType="touchUpInside" id="0Y7-Mo-k4v"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zdU-Dk-Pyu">
+                                                <rect key="frame" x="0.0" y="232" width="400" height="50"/>
+                                                <color key="backgroundColor" red="1" green="0.58546906399999998" blue="0.0072833478759999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="50" id="ziU-JI-N3A"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                                <state key="normal" title="Share with Students">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="shareLocation:" destination="ixl-8H-UnC" eventType="touchUpInside" id="afp-Bn-2PI"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                     </stackView>
@@ -148,6 +165,7 @@
                         <outlet property="linkTextField" destination="TiE-6b-pUO" id="7LX-fw-9GA"/>
                         <outlet property="mapView" destination="uYR-BO-S6t" id="Mej-gl-P7K"/>
                         <outlet property="questionLabel" destination="eOR-oa-1MC" id="6YN-KY-hJQ"/>
+                        <outlet property="shareButton" destination="zdU-Dk-Pyu" id="mok-qb-E8h"/>
                         <outlet property="stateTextField" destination="HtA-I3-1Mf" id="oIZ-UN-mQ1"/>
                     </connections>
                 </viewController>
@@ -205,14 +223,23 @@
                     </view>
                     <navigationItem key="navigationItem" title="On The Map" id="BUC-sd-elW">
                         <leftBarButtonItems>
-                            <barButtonItem systemItem="stop" id="D15-fa-nTW"/>
+                            <barButtonItem systemItem="stop" id="D15-fa-nTW">
+                                <connections>
+                                    <action selector="logout:" destination="8rJ-Kc-sve" id="gar-b6-y2N"/>
+                                </connections>
+                            </barButtonItem>
                             <barButtonItem systemItem="add" id="8eW-84-EOz">
                                 <connections>
-                                    <segue destination="ixl-8H-UnC" kind="presentation" modalPresentationStyle="fullScreen" id="G2O-F1-n2v"/>
+                                    <action selector="addLocation:" destination="8rJ-Kc-sve" id="lgX-8g-SxI"/>
+                                    <segue destination="ixl-8H-UnC" kind="presentation" identifier="segueToAdd" id="G2O-F1-n2v"/>
                                 </connections>
                             </barButtonItem>
                         </leftBarButtonItems>
-                        <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="9u1-ej-Sfp"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="9u1-ej-Sfp">
+                            <connections>
+                                <action selector="reloadData:" destination="8rJ-Kc-sve" id="dxj-yI-UjM"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="addPinButton" destination="8eW-84-EOz" id="oV9-5F-Hg5"/>
@@ -228,7 +255,7 @@
         <!--Tab Bar Controller-->
         <scene sceneID="yl2-sM-qoP">
             <objects>
-                <tabBarController interfaceStyle="light" id="49e-Tb-3d3" sceneMemberID="viewController">
+                <tabBarController modalPresentationStyle="fullScreen" interfaceStyle="light" id="49e-Tb-3d3" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="afw-BO-22I"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="W28-zg-YXA">
@@ -298,7 +325,6 @@
                                                 </state>
                                                 <connections>
                                                     <action selector="loginTapped:" destination="IIW-dK-m5x" eventType="touchUpInside" id="2XC-de-b5F"/>
-                                                    <segue destination="49e-Tb-3d3" kind="presentation" identifier="LoginSegue" modalPresentationStyle="fullScreen" id="y3w-65-NwR"/>
                                                 </connections>
                                             </button>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="-72" translatesAutoresizingMaskIntoConstraints="NO" id="XSL-Xc-I1B">
@@ -349,6 +375,7 @@
                         <outlet property="passowrdField" destination="A1d-1d-py0" id="biN-U1-cuw"/>
                         <outlet property="signUpButton" destination="m3N-pi-BL0" id="HbH-A1-jLG"/>
                         <outlet property="usernameField" destination="W9i-4M-Jl5" id="kSl-ez-0eV"/>
+                        <segue destination="49e-Tb-3d3" kind="show" identifier="LoginSegue" id="RTF-Ly-sDu"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6p8-LD-GeE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
