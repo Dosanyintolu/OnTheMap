@@ -141,6 +141,8 @@ class AddMapLocationViewController: UIViewController, MKMapViewDelegate, UITextF
     func handleGetUserData(success: Bool, error: Error?) {
         if success {
               ParseClient.postStudentLocation(uniquekey: uniqueKey, firstName: firstName, lastName: lastName, mapString: "\(cityTextField.text!), \(stateTextField.text!)", mediaURL: "\(linkTextField.text!)", latitude: location.coordinate.latitude, longitude: location.coordinate.longitude, completionHandler: handlePostLocation(success:error:))
+            
+            print(location.coordinate.latitude , location.coordinate.longitude)
         } else {
             postLocationError()
             print(error!.localizedDescription)

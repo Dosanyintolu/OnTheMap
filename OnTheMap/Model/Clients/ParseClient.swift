@@ -62,6 +62,7 @@ class ParseClient {
             if let response = response {
                 Auth.objectId = response.objectId
                 Auth.createdAt = response.createdAt
+                print("\(Auth.objectId)  ,\(Auth.createdAt)")
                 completionHandler(true, nil)
             }else {
                 completionHandler(false, error)

@@ -8,10 +8,6 @@
 
 import Foundation
 
-struct User: Codable {
-    let user: UserData
-}
-
 struct UserData: Codable {
     
     let firstName: String

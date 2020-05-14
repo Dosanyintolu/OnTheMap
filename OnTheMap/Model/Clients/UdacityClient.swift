@@ -107,10 +107,10 @@ class UdacityClient {
     }
     
     class func getUserData(completionHandler: @escaping (UserData?, Error?) -> Void) {
-        taskGETRequest(url: Endpoint.getUserDataURL.url, response: User.self) { (response, error) in
+        taskGETRequest(url: Endpoint.getUserDataURL.url, response: UserData.self) { (response, error) in
             if let response = response {
                 DispatchQueue.main.async {
-                completionHandler(response.user, nil)
+                completionHandler(response, nil)
                 }
                 print(response)
             } else {
