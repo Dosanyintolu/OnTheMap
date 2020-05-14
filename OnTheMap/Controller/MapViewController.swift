@@ -131,11 +131,5 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         present(alert, animated: true, completion: nil)
     }
     
-    func errorView() {
-        let alert = UIAlertController(title: "Error", message: "Application Error", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-        present(alert, animated: true, completion: nil)
-    }
-    
 }
 

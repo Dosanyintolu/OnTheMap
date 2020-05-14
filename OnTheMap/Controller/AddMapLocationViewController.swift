@@ -21,7 +21,7 @@ class AddMapLocationViewController: UIViewController, MKMapViewDelegate, UITextF
     @IBOutlet weak var linkTextField: UITextField!
     @IBOutlet weak var dropPinButton: UIButton!
     @IBOutlet weak var shareButton: UIButton!
-    
+        
     var uniqueKey = ""
     var firstName = ""
     var lastName = ""
@@ -68,8 +68,11 @@ class AddMapLocationViewController: UIViewController, MKMapViewDelegate, UITextF
        getUserData(completionHandler: handleGetUserData(success:error:))
     }
     
+    @IBAction func backButton(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
     
-      func getCoordinate(addressString : String, completionHandler: @escaping(CLLocationCoordinate2D, NSError?) -> Void ) {
+    func getCoordinate(addressString : String, completionHandler: @escaping(CLLocationCoordinate2D, NSError?) -> Void ) {
           let geocoder = CLGeocoder()
           geocoder.geocodeAddressString(addressString) { (placemarks, error) in
               if error == nil {

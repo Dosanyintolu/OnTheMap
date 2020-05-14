@@ -21,7 +21,7 @@ class ParseClient {
         
     }
     enum Endpoint {
-        static let getLocation = "https://onthemap-api.udacity.com/v1/StudentLocation?limit=100"
+        static let getLocation = "https://onthemap-api.udacity.com/v1/StudentLocation?order=-updatedAt"
         static let postLocation = "https://onthemap-api.udacity.com/v1/StudentLocation"
         static let putLocation = "https://onthemap-api.udacity.com/v1/StudentLocation/" + "\(Auth.objectId)"
         static let udacity = "https://www.udacity.com"
