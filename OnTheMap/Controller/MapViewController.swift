@@ -75,7 +75,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     func getStudentPins() {
         ParseClient.getStudentLocation { (studentLocation, error) in
             if error != nil {
-                print(error?.localizedDescription ?? "")
+                self.getStudentLocationError()
             }else{
                 self.location = studentLocation
                 DispatchQueue.main.async {
@@ -129,6 +129,12 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         let alert = UIAlertController(title: "Error", message: "Error logging out", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         present(alert, animated: true, completion: nil)
+    }
+    
+    func getStudentLocationError() {
+        let alert = UIAlertController(title: "Error", message: "Error getting student locations", preferredStyle: .alert)
+               alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+               present(alert, animated: true, completion: nil)
     }
     
 }

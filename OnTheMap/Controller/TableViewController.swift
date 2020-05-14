@@ -47,7 +47,7 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
     func getStudentLocations() {
         ParseClient.getStudentLocation { (studentLocation, error) in
             if error != nil {
-                print(error?.localizedDescription ?? "")
+                self.getStudentLocationError()
             } else {
                 self.Locations = studentLocation
                 self.tableView.reloadData()
@@ -99,5 +99,10 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
            present(alert, animated: true, completion: nil)
        }
     
+    func getStudentLocationError() {
+           let alert = UIAlertController(title: "Error", message: "Error getting student locations", preferredStyle: .alert)
+                  alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                  present(alert, animated: true, completion: nil)
+       }
 }
 

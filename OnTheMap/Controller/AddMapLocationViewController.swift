@@ -21,7 +21,8 @@ class AddMapLocationViewController: UIViewController, MKMapViewDelegate, UITextF
     @IBOutlet weak var linkTextField: UITextField!
     @IBOutlet weak var dropPinButton: UIButton!
     @IBOutlet weak var shareButton: UIButton!
-        
+    @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
+    
     var uniqueKey = ""
     var firstName = ""
     var lastName = ""
@@ -36,10 +37,8 @@ class AddMapLocationViewController: UIViewController, MKMapViewDelegate, UITextF
         cityTextField.delegate = self
         stateTextField.delegate = self
         linkTextField.delegate = self
-        shareButton.isHidden = true
-        linkTextField.isHidden = true
         locationManager.delegate = self
-        
+        loadingIndicator.isHidden = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -54,11 +53,11 @@ class AddMapLocationViewController: UIViewController, MKMapViewDelegate, UITextF
     }
     
     @IBAction func dropPin(_ sender: Any) {
+        enableLoading(Bool: true)
         getCoordinate(addressString: "\(cityTextField.text!), \(stateTextField.text!)") { (location, error) in
             if error == nil {
                 let annotation = MKPointAnnotation()
                 annotation.coordinate = CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude)
-                
                 self.mapView.addAnnotation(annotation)
             }
         }
@@ -68,7 +67,7 @@ class AddMapLocationViewController: UIViewController, MKMapViewDelegate, UITextF
        getUserData(completionHandler: handleGetUserData(success:error:))
     }
     
-    @IBAction func backButton(_ sender: Any) {
+    @IBAction func cancelButton(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
     
@@ -80,7 +79,7 @@ class AddMapLocationViewController: UIViewController, MKMapViewDelegate, UITextF
                       let location = placemark.location!
                       self.location = location
                       
-                      let span = MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
+                      let span = MKCoordinateSpan(latitudeDelta: 0.03, longitudeDelta: 0.03)
                       let cordinate = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
                       let region = MKCoordinateRegion(center: cordinate, span: span)
                       self.mapView.setRegion(region, animated: true)
@@ -88,6 +87,8 @@ class AddMapLocationViewController: UIViewController, MKMapViewDelegate, UITextF
                       return
                   }
               }
+            self.geocodingError()
+            self.enableLoading(Bool: false)
               completionHandler(kCLLocationCoordinate2DInvalid, error as NSError?)
           }
       }
@@ -179,4 +180,19 @@ class AddMapLocationViewController: UIViewController, MKMapViewDelegate, UITextF
         present(alertVC, animated: true, completion: nil)
     }
     
+    func geocodingError() {
+        let alertVC = UIAlertController(title: "Error", message: "Error finding location", preferredStyle: .alert)
+        alertVC.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        present(alertVC, animated: true, completion: nil)
+    }
+    
+    func enableLoading(Bool: Bool) {
+        if Bool {
+            loadingIndicator.isHidden = false
+            loadingIndicator.startAnimating()
+        } else {
+            loadingIndicator.stopAnimating()
+            loadingIndicator.isHidden = true
+        }
+    }
 }

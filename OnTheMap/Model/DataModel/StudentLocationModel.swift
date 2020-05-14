@@ -1,5 +1,5 @@
 //
-//  LocationModel.swift
+//  StudentLocationModel.swift
 //  OnTheMap
 //
 //  Created by Doyinsola Osanyintolu on 5/6/20.
@@ -9,6 +9,7 @@
 import Foundation
 
 
-class LocationModel {
+class StudentLocationModel {
     static var studentLocation = [StudentLocation]()
+    
 }
