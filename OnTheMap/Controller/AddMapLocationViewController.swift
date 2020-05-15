@@ -59,6 +59,7 @@ class AddMapLocationViewController: UIViewController, MKMapViewDelegate, UITextF
                 let annotation = MKPointAnnotation()
                 annotation.coordinate = CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude)
                 self.mapView.addAnnotation(annotation)
+                self.enableLoading(Bool: false)
             }
         }
     }
@@ -79,7 +80,7 @@ class AddMapLocationViewController: UIViewController, MKMapViewDelegate, UITextF
                       let location = placemark.location!
                       self.location = location
                       
-                      let span = MKCoordinateSpan(latitudeDelta: 0.03, longitudeDelta: 0.03)
+                      let span = MKCoordinateSpan(latitudeDelta: 0.50, longitudeDelta: 0.50)
                       let cordinate = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
                       let region = MKCoordinateRegion(center: cordinate, span: span)
                       self.mapView.setRegion(region, animated: true)

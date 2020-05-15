@@ -22,7 +22,6 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
         // Do any additional setup after loading the view.
         tableView.delegate = self
         tableView.dataSource = self
-        getStudentLocations()
     }
     
     override func viewWillAppear(_ animated: Bool) {
