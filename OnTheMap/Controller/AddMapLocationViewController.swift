@@ -54,6 +54,7 @@ class AddMapLocationViewController: UIViewController, MKMapViewDelegate, UITextF
     
     @IBAction func dropPin(_ sender: Any) {
         enableLoading(Bool: true)
+        stateTextField.resignFirstResponder()
         getCoordinate(addressString: "\(cityTextField.text!), \(stateTextField.text!)") { (location, error) in
             if error == nil {
                 let annotation = MKPointAnnotation()
@@ -89,7 +90,6 @@ class AddMapLocationViewController: UIViewController, MKMapViewDelegate, UITextF
                   }
               }
             self.geocodingError()
-            self.enableLoading(Bool: false)
               completionHandler(kCLLocationCoordinate2DInvalid, error as NSError?)
           }
       }
